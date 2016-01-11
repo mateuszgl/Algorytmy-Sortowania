@@ -93,21 +93,21 @@ void BubbleSort(int T[], int size) {
 //-----------------------------------------------------------------------
 //							Bubble 2
 void BubbleSort2(int T[], int size) {
-	int pmin = 0, pmax = size - 1, p;
-
+	
+	int swapcheck;
 	do
 	{
-		p = -1;
-		for (int i = pmin; i < pmax; i++)
-			if (T[i] > T[i + 1])
+		swapcheck = 0;
+		for (int i = 0; i<size; i++)
+		{
+			if (T[i]>T[i + 1])
 			{
+				swapcheck++; 
 				swap(T[i], T[i + 1]);
-				if (p < 0) pmin = i;
-				p = i;
 			}
-		if (pmin) pmin--;
-		pmax = p;
-	} while (p >= 0);
+		}
+	} while (swapcheck != 0);
+
 }
 
 //-----------------------------------------------------------------------
@@ -195,7 +195,7 @@ int main()
 	cout << "250 000 liczb" << endl;
 
 	cout << endl << "Nieposortowane:" << endl;
-
+	//print(T, size);
 	buildTmp(T, size, Tmp);
 	auto qs1 = Clock::now();
 	quickSort(Tmp, 0, size);
@@ -224,7 +224,7 @@ int main()
 	auto b3 = Clock::now();
 	BubbleSort2(Tmp, size);
 	auto b4 = Clock::now();
-	cout << "bubbleSort2 :     " << chrono::duration_cast<std::chrono::milliseconds>(b4 - b3).count() << "ms" << endl;
+	cout << "bubbleSort2 :    " << chrono::duration_cast<std::chrono::milliseconds>(b4 - b3).count() << "ms" << endl;
 
 	buildTmp(T, size, Tmp);
 	auto i1 = Clock::now();
@@ -266,10 +266,15 @@ int main()
 	auto b2p = Clock::now();
 	cout << "bubbleSort :     " << chrono::duration_cast<std::chrono::milliseconds>(b2p - b1p).count() << "ms" << endl;
 
+	auto b3p = Clock::now();
+	BubbleSort2(Tmp, size);
+	auto b4p = Clock::now();
+	cout << "bubbleSort2 :    " << chrono::duration_cast<std::chrono::milliseconds>(b4p - b3p).count() << "ms" << endl;
+
 	auto i1p = Clock::now();
 	InsertionSort(Tmp,size);
 	auto i2p = Clock::now();
-	cout << "insertionSort :  " << chrono::duration_cast<std::chrono::nanoseconds>(i2p - i1p).count() << "ms" << endl;
+	cout << "insertionSort :  " << chrono::duration_cast<std::chrono::milliseconds>(i2p - i1p).count() << "ms" << endl;
 
 	auto h1p = Clock::now();
 	Heapsort(Tmp, size);
@@ -305,6 +310,12 @@ int main()
 	BubbleSort(Tmp, size);
 	auto b2o = Clock::now();
 	cout << "bubbleSort :     " << chrono::duration_cast<std::chrono::milliseconds>(b2o - b1o).count() << "ms" << endl;
+
+	buildTmp(T, size, Tmp);
+	auto b3o = Clock::now();
+	BubbleSort2(Tmp, size);
+	auto b4o = Clock::now();
+	cout << "bubbleSort2 :    " << chrono::duration_cast<std::chrono::milliseconds>(b4o - b3o).count() << "ms" << endl;
 
 	buildTmp(T, size, Tmp);
 	auto i1o = Clock::now();
